@@ -1,0 +1,11 @@
+CREATE TABLE :
+
+Roll Number(5),Name Varchar2(30),City Varchar(10),Age Number(3),CGPA Number(4,2));
+
+INSERT INTO TABLE :
+
+Insert into studtab values (&Roll, '& NAme','&city',&age,&cgpa);
+
+Select * from studtab;
+
+UPDATE : update studtab set Roll='101' WHERE Name ='Harry';

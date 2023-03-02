@@ -1,0 +1,66 @@
+SQL> connect Abhishek/2005982;
+Connected.
+SQL> SELECT AVG(SYSDATE-BIRTHDAY)/365 AS AVGAGE, MAX(SYSDATE-BIRTHDAY)/365 AS MAXAGE, MIN(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+
+SQL> SELECT DISTINCT BUILDING FROM LOCATION;
+
+BUILDIN
+-------
+Gandhi
+Kennedy
+Nehru
+
+SQL> select section from crssection;
+
+SE
+--
+1
+1
+2
+10
+1
+2
+5
+21
+11
+31
+
+10 rows selected.
+
+SELECT NAME from FACULTY where DEPTID IN (1,2);
+
+NAME
+---------------
+Jones
+Williams
+Mobley
+Vajpayee
+
+SQL> SELECT FIRST,LAST FROM STUDENT WHERE STATE IN('NJ','NY');
+
+FIRST           LAST
+--------------- ---------------
+Jose            Diaz
+Mickey          Tyler
+Rajesh          Patel
+Deborah         Rickles
+Brian           Lee
+Amir            Khan
+
+6 rows selected.
+
+SQL> select Facultyid, name from Faculty order by Facultyid desc, name asc;
+
+ FACULTYID NAME
+---------- ---------------
+       555 Chang
+       444 Rivera
+       345 Sen
+       333 Collins
+       235 Vajpayee
+       222 Williams
+       123 Mobley
+       111 Jones
+
+8 rows selected.

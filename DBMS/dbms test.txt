@@ -1,0 +1,84 @@
+SQL> connect Abhishek/2005982;
+Connected.
+SQL> SELECT AVG(SYSDATE-BIRTHDAY)/365 AS AVGAGE, MAX(SYSDATE-BIRTHDAY)/365 AS MAXAGE, MIN(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+    AVGAGE     MAXAGE     MAXAGE
+---------- ---------- ----------
+39.7808976 51.4041852 36.2480209
+
+SQL> SELECT DISTINCT building FROM location;
+
+BUILDIN
+-------
+Gandhi
+Kennedy
+Nehru
+
+SQL> select Section from crssection where termid='WN03';
+
+SE
+--
+1
+1
+2
+10
+
+SQL> SELECT name from faculty where deptid IN (1,2);
+
+NAME
+---------------
+jones
+Williams
+Mobley
+Vajpayee
+
+SQL> select first,last from student where state in('NJ','NY');
+
+FIRST           LAST
+--------------- ---------------
+Jose            Diaz
+Mickey          Tyler
+Rajesh          Patel
+Deborah         Rickles
+Brian           Lee
+Amir            Khan
+
+6 rows selected.
+
+SQL> SELECT courseid , MAX(maxcount) AS MAX FROM crssection GROUP BY courseid ORDER BY MAX DESC;
+
+COURSE        MAX
+------ ----------
+CIS253         40
+CIS265         35
+AC101          35
+LA123          30
+MA150          25
+
+SQL> Select courseid from course where prereq is NULL;
+
+COURSE
+------
+en100
+cis253
+cis265
+ac101
+
+SQL> SELECT name FROM faculty ORDER BY facultyid desc,Name ASC;
+
+NAME
+---------------
+Chang
+Rivera
+Sen
+Collins
+Vajpayee
+Williams
+Mobley
+jones
+
+8 rows selected.
+
+SQL> select name from faculty where name like '_s%';
+
+no rows selected.

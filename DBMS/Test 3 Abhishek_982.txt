@@ -1,0 +1,70 @@
+SQL> connect Abhishek/2005982;
+Connected.
+SQL> grant all privilege to Abhishek;
+
+Grant succeeded.
+
+SQL> create table Student_2005982(Name varchar(20),Rollno number(10),Branch varchar2(20),City varchar2(20));
+
+Table created.
+
+SQL> insert into Student_2005982 values('Vijaya',150,'CSE','Chennai');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Sita',202,'ETC','Kolkata');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Ravi',300,'EEE','Delhi');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Basu',165,'ETC','Chennai');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Rasmi',107,'ETC','Chennai');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Karan',111,'CSE','CTC');
+
+1 row created.
+
+SQL> insert into Student_2005982 values('Rekha',117,'BME','BBSR');
+
+1 row created.
+
+SQL> select branch,count(*) from Student_2005982 group by branch;
+
+BRANCH                 COUNT(*)
+-------------------- ----------
+EEE                           1
+ETC                           3
+CSE                           2
+BME                           1
+
+SQL> select name from Student_2005982 where city='Chennai';
+
+NAME
+--------------------
+Vijaya
+Basu
+Rasmi
+
+SQL> select name from Student_2005982 where branch=(select branch from Student_2005982 where name='Basu');
+
+NAME
+--------------------
+Sita
+Basu
+Rasmi
+
+create view Sview_2005982 as select Rollno,Branch from Student_2005982;
+
+View created.
+
+SQL> delete from Student_2005982 where branch='ETC';
+
+3 rows deleted.

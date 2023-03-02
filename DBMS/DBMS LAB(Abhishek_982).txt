@@ -1,0 +1,316 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Feb 22 00:37:41 2022
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL>  CREATE TABLE EMPLOYEE_LAB (EMPLOYEEID NUMBER(3),LNAME VARCHAR2(15),FNAME VARCHAR2(15),POSITIONID NUMBER(1),SUPERVISOR NUMBER(3), HIREDATE DATE,SALARY NUMBER(6),COMM NUMBER(5),DEPTID NUMBER(2),QUALID NUMBER(1));
+
+Table created.
+
+SQL> CREATE TABLE DEPT_LAB (DEPTID NUMBER(2),DEPTNAME VARCHAR2(12),LOCATION VARCHAR2(15),EMPLOYEEID NUMBER(3));
+
+Table created.
+
+SQL> CREATE TABLE EMPLEVEL (LEVELNO NUMBER(1),LOWSAL NUMBER(6),HIGHSAL NUMBER(6));
+
+Table created.
+
+SQL> CREATE TABLE POSITION_LAB (POSITIONID NUMBER(1),POSDESC VARCHAR2(10));
+
+Table created.
+
+SQL> CREATE TABLE DEPENDENT_LAB (EMPLOYEEID NUMBER(3),DEPENTDENTID NUMBER(1), DEPDOB DATE,RELATION VARCHAR2(8));
+
+Table created.
+
+SQL> CREATE TABLE QUALIFICATION_LAB (QUALID NUMBER(1), QUALDESC VARCHAR2(11));
+
+Table created.
+
+SQL> ALTER TABLE EMPLOYEE_LAB MODIFY LNAME VARCHAR2(15) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB MODIFY FNAME VARCHAR2(15) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPID_LAB PRIMARY KEY (EMPLOYEEID);
+
+Table altered.
+
+SQL> ALTER TABLE DEPT_LAB ADD CONSTRAINT DEPTID_LAB PRIMARY KEY (DEPTID);
+
+Table altered.
+
+SQL> ALTER TABLE EMPLEVEL ADD CONSTRAINT LEVELID_LAB PRIMARY KEY (LEVELNO);
+
+Table altered.
+
+SQL> ALTER TABLE POSITION_LAB ADD CONSTRAINT POSITIONID_LAB PRIMARY KEY (POSITIONID);
+
+Table altered.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> ALTER TABLE DEPENDENT_LAB ADD CONSTRAINT EMPDEPENID_LAB PRIMARY KEY (EMPLOYEEID, DEPENTDENTID);
+
+Table altered.
+
+SQL> ALTER TABLE QUALIFICATION_LAB ADD CONSTRAINT QUALID_LAB PRIMARY KEY (QUALID);
+
+Table altered.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> DESC EMPLOYEE_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER(3)
+ LNAME                                     NOT NULL VARCHAR2(15)
+ FNAME                                     NOT NULL VARCHAR2(15)
+ POSITIONID                                         NUMBER(1)
+ SUPERVISOR                                         NUMBER(3)
+ HIREDATE                                           DATE
+ SALARY                                             NUMBER(6)
+ COMM                                               NUMBER(5)
+ DEPTID                                             NUMBER(2)
+ QUALID                                             NUMBER(1)
+
+SQL> DESC DEPT_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                    NOT NULL NUMBER(2)
+ DEPTNAME                                           VARCHAR2(12)
+ LOCATION                                           VARCHAR2(15)
+ EMPLOYEEID                                         NUMBER(3)
+
+SQL> DESC POSITION_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ POSITIONID                                NOT NULL NUMBER(1)
+ POSDESC                                            VARCHAR2(10)
+
+SQL> DESC DEPENDENT_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER(3)
+ DEPENTDENTID                              NOT NULL NUMBER(1)
+ DEPDOB                                             DATE
+ RELATION                                           VARCHAR2(8)
+
+SQL> DESC QUALIFICATION_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ QUALID                                    NOT NULL NUMBER(1)
+ QUALDESC                                           VARCHAR2(11)
+
+SQL> DESC EMPLEVEL;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LEVELNO                                   NOT NULL NUMBER(1)
+ LOWSAL                                             NUMBER(6)
+ HIGHSAL                                            NUMBER(6)
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT POSTID_LAB FOREIGN KEY (POSITIONID) REFERENCES POSITION_LAB(POSITIONID);
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPDEPTID_LAB FOREIGN KEY (DEPTID) REFERENCES DEPT_LAB(DEPTID);
+
+Table altered.
+
+SQL> LTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPQUALID_LAB FOREIGN KEY (QUALID) REFERENCES QUALIFICATION_LAB(QUALID);
+SP2-0734: unknown command beginning "LTER TABLE..." - rest of line ignored.
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPQUALID_LAB FOREIGN KEY (QUALID) REFERENCES QUALIFICATION_LAB(QUALID);
+
+Table altered.
+
+SQL> commit;
+
+Commit complete.
+
+SQL>
+----------------------------------------------------------------------------------------
+ desc dept_lab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                    NOT NULL NUMBER(2)
+ DEPTNAME                                           VARCHAR2(12)
+ LOCATION                                           VARCHAR2(15)
+ EMPLOYEEID                                         NUMBER(3)
+
+
+SQL> insert into dept_lab values(10,'Finance','Charlotte',123);
+
+1 row created.
+
+SQL> insert into dept_lab values(20,'Infosys','New York',543);
+
+1 row created.
+
+SQL> insert into dept_lab values(30,'Sales','Woodbridge',135);
+
+1 row created.
+
+SQL> insert into dept_lab values(40,'Marketing','Los Angeles',246);
+
+1 row created.
+
+SQL> desc position_lab;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ POSITIONID                                NOT NULL NUMBER(1)
+ POSDESC                                            VARCHAR2(10)
+
+SQL>  insert into position_lab values(1,'President');
+
+1 row created.
+
+SQL> insert into position_lab values(2,'Manager');
+
+1 row created.
+
+SQL> insert into position_lab values(3,'Programmer');
+
+1 row created.
+
+SQL> insert into position_lab values(4,'Accountant');
+
+1 row created.
+
+SQL> insert into position_lab values(5,'Salesman');
+
+1 row created.
+
+SQL> insert into qualification_lab values(1, 'Doctorate');
+
+1 row created.
+
+SQL> insert into qualification_lab values(2, 'Masters');
+
+1 row created.
+
+SQL> insert into qualification_lab values(3, 'Bachelors');
+
+1 row created.
+
+SQL> insert into qualification_lab values(4, 'Associates');
+
+1 row created.
+
+SQL> insert into qualification_lab values(5, 'High School');
+
+1 row created.
+
+SQL> desc emplevel;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LEVELNO                                   NOT NULL NUMBER(1)
+ LOWSAL                                             NUMBER(6)
+ HIGHSAL                                            NUMBER(6)
+
+SQL> insert into emplevel values(1,1,25000)
+  2  insert into emplevel values(2,25001,50000);
+insert into emplevel values(2,25001,50000)
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> insert into emplevel values(1,1,25000);
+
+1 row created.
+
+SQL>  insert into emplevel values(2,25001,50000);
+
+1 row created.
+
+SQL> insert into emplevel values(3,50001,100000);
+
+1 row created.
+
+SQL> insert into emplevel values(4,100001,500000);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from dept_lab;
+
+    DEPTID DEPTNAME     LOCATION        EMPLOYEEID
+---------- ------------ --------------- ----------
+        10 Finance      Charlotte              123
+        20 Infosys      New York               543
+        30 Sales        Woodbridge             135
+        40 Marketing    Los Angeles            246
+
+SQL> select * from qualification_lab;
+
+    QUALID QUALDESC
+---------- -----------
+         1 Doctorate
+         2 Masters
+         3 Bachelors
+         4 Associates
+         5 High School
+
+SQL> select * from  qualification_lab;
+
+    QUALID QUALDESC
+---------- -----------
+         1 Doctorate
+         2 Masters
+         3 Bachelors
+         4 Associates
+         5 High School
+
+SQL> insert into dependent_lab values(543, 1, to_date('sep/28/58', 'mon/dd/yy'), 'spouse');
+
+1 row created.
+
+SQL>  insert into dependent_lab values(543, 2, to_date('sep/28/58', 'mon/dd/yy'), 'spouse');
+
+1 row created.
+
+SQL>  insert into dependent_lab values(200, 1, to_date('jun/10/76', 'mon/dd/yy'), 'spouse');
+
+1 row created.
+
+SQL>  insert into dependent_lab values(222, 1, to_date('feb/04/75', 'mon/dd/yy'), 'spouse');
+
+1 row created.
+
+SQL>  insert into dependent_lab values(222, 2, to_date('aug/23/97', 'mon/dd/yy'), 'son');
+
+1 row created.
+
+SQL> insert into dependent_lab values(222, 3, to_date('july/10/99', 'mon/dd/yy'), 'daughter');
+
+1 row created.
+
+SQL>  insert into dependent_lab values(111, 1, to_date('dec/12/45', 'mon/dd/yy'), 'spouse');
+
+1 row created.
+
+SQL> select * from dependent_lab;
+
+EMPLOYEEID DEPENTDENTID DEPDOB    RELATION
+---------- ------------ --------- --------
+       543            1 28-SEP-58 spouse
+       543            2 28-SEP-58 spouse
+       200            1 10-JUN-76 spouse
+       222            1 04-FEB-75 spouse
+       222            2 23-AUG-97 son
+       222            3 10-JUL-99 daughter
+       111            1 12-DEC-45 spouse
+
+7 rows selected.
+
+SQL>

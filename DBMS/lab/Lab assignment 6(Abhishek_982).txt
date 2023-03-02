@@ -1,0 +1,173 @@
+SQL> select count(roomid) from location;
+
+COUNT(ROOMID)
+-------------
+           11
+
+SQL> select count(distinct building) from location;
+
+COUNT(DISTINCTBUILDING)
+-----------------------
+                      3
+
+SQL> select first , TO_CHAR(birthday, 'DD MONTH, YYYY') from STUDENT;
+
+FIRST           TO_CHAR(BIRTHDAY,'DDMONTH,YYYY')
+--------------- ---------------------------------------------
+Jose            12 FEBRUARY , 1983
+Mickey          18 MARCH    , 1984
+Rajesh          12 DECEMBER , 1985
+Deborah         20 OCTOBER  , 1970
+Brian           28 NOVEMBER , 1985
+Amir            07 JULY     , 1984
+
+6 rows selected.
+
+SQL> select extract(year from birthday) from student;
+
+EXTRACT(YEARFROMBIRTHDAY)
+-------------------------
+                     1983
+                     1984
+                     1985
+                     1970
+                     1985
+                     1984
+
+6 rows selected.
+
+SQL> SELECT AVG(SYSDATE-BIRTHDAY)/365 AS AVGAGE FROM STUDENT;
+
+    AVGAGE
+----------
+39.7618043
+
+SQL> SELECT MAX(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+    MAXAGE
+----------
+51.3850921
+
+SQL> SELECT MIN(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+    MAXAGE
+----------
+ 36.228928
+
+SQL> SELECT COURSEID, TERMID, SUM(MAXCOUNT) FROM CROSSECTION GROUP BY TERMID, COURSEID;
+SELECT COURSEID, TERMID, SUM(MAXCOUNT) FROM CROSSECTION GROUP BY TERMID, COURSEID
+SQL> SELECT COUNT(*) FROM STUDENT GROUP BY STATE;
+
+  COUNT(*)
+----------
+         4
+         2
+
+SQL> SELECT COUNT(ROOMID) FROM LOCATION;
+
+COUNT(ROOMID)
+-------------
+           11
+
+SQL> SELECT FIRST,TO_CHAR(BIRTHDAY,'DD MONTH YYYY') FROM STUDENT;
+
+FIRST           TO_CHAR(BIRTHDAY,'DDMONTHYYYY')
+--------------- --------------------------------------------
+Jose            12 FEBRUARY  1983
+Mickey          18 MARCH     1984
+Rajesh          12 DECEMBER  1985
+Deborah         20 OCTOBER   1970
+Brian           28 NOVEMBER  1985
+Amir            07 JULY      1984
+
+6 rows selected.
+
+SQL> SELECT AVG(SYSDATE-BIRTHDAY)/365 AS AVGAGE FROM STUDENT;
+
+    AVGAGE
+----------
+39.7618179
+
+SQL> SELECT MAX(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+    MAXAGE
+----------
+51.3851057
+
+SQL> SELECT MIN(SYSDATE-BIRTHDAY)/365 AS MAXAGE FROM STUDENT;
+
+    MAXAGE
+----------
+36.2289414
+
+SQL> SELECT TITLE,NVL2(PREREQ,'NONE','ONE') FROM COURSE;
+
+TITLE                NVL2
+-------------------- ----
+Basic English        ONE
+English Literature   NONE
+Database Systems     ONE
+Systems Analysis     NONE
+College Algebra      ONE
+Accounting           ONE
+
+6 rows selected.
+
+SQL> SELECT COUNT(*) FROM FACULTY GROUP BY DEPTID;
+
+  COUNT(*)
+----------
+         2
+         2
+         1
+         1
+         2
+SQL> SELECT NAME FROM FACULTY ORDER BY DEPTID, NAME ASC;
+
+NAME
+---------------
+Jones
+Mobley
+Vajpayee
+Williams
+Collins
+Sen
+Rivera
+Chang
+
+8 rows selected.
+
+SQL> SELECT COUNT(*) FROM STUDENT GROUP BY STATE;
+
+  COUNT(*)
+----------
+         4
+         2
+SQL> select title,nvl2(prereq,'none','one') from course;
+
+TITLE                NVL2
+-------------------- ----
+Basic English        one
+English Literature   none
+Database Systems     one
+Systems Analysis     none
+College Algebra      one
+Accounting           one
+
+6 rows selected.
+
+select courseid, termid, sum(maxcount) from crssection group by termid, courseid;
+
+COURSE TERM SUM(MAXCOUNT)
+------ ---- -------------
+CIS265 WN03            30
+AC101  WN03            35
+CIS253 WN03            40
+MA150  WN03            25
+CIS253 SP03            82
+LA123  SP03            30
+CIS265 SP03            65
+
+7 rows selected.
+
+SQL>

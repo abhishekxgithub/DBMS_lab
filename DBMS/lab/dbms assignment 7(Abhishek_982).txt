@@ -1,0 +1,179 @@
+
+SQL> connect abhishek/2005982;
+Connected.
+
+
+
+********************************JOIN******************************************
+
+SQL> SELECT STUDENT.FIRST||' '||LAST,MAJOR.MAJORDESC FROM STUDENT INNER JOIN MAJOR ON STUDENT.MAJORID=MAJOR.MAJORID;
+
+STUDENT.FIRST||''||LAST         MAJORDESC
+------------------------------- -------------------------
+Jose Diaz                       AAS-Accounting
+Amir Khan                       AAS-Computer Science
+Rajesh Patel                    BS-Accounting
+Deborah Rickles                 BS-Computer Science
+Mickey Tyler                    BS-Computer Science
+Brian Lee                       BS-Telecommunications
+
+6 rows selected.
+
+SQL> SELECT CONCAT(FIRST ,LAST) AS NAME FROM STUDENT JOIN REGISTRATION ON STUDENT.STUDENTID = REGISTRATION.STUDENTID WHERE FINAL = 'F 'AND STARTTERM = 'WN03';
+
+NAME
+------------------------------
+JoseDiaz
+
+SQL> SELECT CONCAT(FIRST, LAST) AS NAME , FACULTY.NAME,LOCATION.BUILDING FROM STUDENT INNER JOIN FACULTY ON STUDENT.FACULTYID = FACULTY.FACULTYID INNER JOIN LOCATION ON LOCATION.ROOMID = FACULTY.ROOMID;
+
+NAME                           NAME            BUILDIN
+------------------------------ --------------- -------
+JoseDiaz                       Mobley          Gandhi
+RajeshPatel                    Jones           Gandhi
+BrianLee                       Sen             Gandhi
+MickeyTyler                    Chang           Gandhi
+DeborahRickles                 Chang           Gandhi
+AmirKhan                       Williams        Gandhi
+
+6 rows selected.
+
+SQL> SELECT SECTION , NAME AS FACULTY_NAME FROM CRSSECTION FULL JOIN FACULTY ON CRSSECTION.FACULTYID = FACULTY.FACULTYID WHERE TERMID = 'SP03';
+
+SE FACULTY_NAME
+-- ---------------
+11 Jones
+2  Jones
+31 Mobley
+21 Mobley
+5
+1
+
+6 rows selected.
+
+SQL> SELECT TITLE,PREREQ FROM COURSE;
+
+TITLE                PREREQ
+-------------------- ------
+Basic English
+English Literature   EN100
+Database Systems
+Systems Analysis     CIS253
+College Algebra
+Accounting
+
+6 rows selected.
+
+SQL> SELECT FACULTYID,NAME,DEPTID FROM FACULTY ORDER BY DEPTID,ROOMID;
+
+ FACULTYID NAME                DEPTID
+---------- --------------- ----------
+       111 Jones                    1
+       123 Mobley                   1
+       235 Vajpayee                 2
+       222 Williams                 2
+       345 Sen                      3
+       333 Collins                  3
+       444 Rivera                   4
+       555 Chang                    5
+
+8 rows selected.
+
+SQL> SELECT DEPTID,COUNT(FACULTYID) AS NUMBER_OF_FACULTY FROM FACULTY GROUP BY DEPTID;
+
+    DEPTID NUMBER_OF_FACULTY
+---------- -----------------
+         1                 2
+         2                 2
+         4                 1
+         5                 1
+         3                 2
+
+
+
+
+********************************SUB QUERY******************************************
+
+
+
+SELECT NAME,PHONE FROM FACULTY WHERE FACULTYID=(select facultyid from student where first='JOSE' and last='DIAZ');
+
+NAME            PHO
+--------------- ---
+MOBLEY          529
+
+
+SQL> SELECT * FROM LOCATION WHERE ROOMTYPE !='O' AND CAPACITY <= ANY (SELECT CAPACITY FROM (SELECT CAPACITY FROM LOCATION WHERE ROOMTYPE !='O' GROUP BY CAPACITY ORDER BY CAPACITY) WHERE ROWNUM <=2);
+
+    ROOMID BUILDIN ROO   CAPACITY R
+---------- ------- --- ---------- -
+        19 KENNEDY 210         30 L
+        13 KENNEDY 202         35 L
+
+SQL> SELECT COURSEID,SECTION,MAXCOUNT FROM (SELECT COURSEID,SECTION,MAXCOUNT FROM CRSSECTION WHERE TERMID='SP03' ORDER BY MAXCOUNT DESC)WHERE ROWNUM<=3;
+
+COURSE SE   MAXCOUNT
+------ -- ----------
+CIS253 21         40
+CIS253 11         40
+CIS265 1          35
+
+
+
+SQL> SELECT * FROM LOCATION WHERE ROOMTYPE=(SELECT ROOMTYPE FROM ROOM WHERE ROOMTYPE='C');
+
+    ROOMID BUILDIN ROO   CAPACITY R
+---------- ------- --- ---------- -
+        15 NEHRU   301         50 C
+        16 NEHRU   309         45 C
+
+SQL> SELECT F.NAME FROM FACULTY F WHERE EXISTS(SELECT * FROM CRSSECTION C WHERE C.FACULTYID=F.FACULTYID AND C.TERMID!='SP03');
+
+NAME
+---------------
+JONES
+MOBLEY
+RIVERA
+SEN
+
+SQL> SELECT FIRST,NAME FROM STUDENT S, FACULTY F WHERE S.FACULTYID=F.FACULTYID;
+
+FIRST           NAME
+--------------- ---------------
+RAJESH          JONES
+AMIR            WILLIAMS
+JOSE            MOBLEY
+BRIAN           SEN
+DEBORAH         CHANG
+MICKEY          CHANG
+
+6 rows selected.
+
+SQL> SELECT FIRST||' '||LAST FROM STUDENT WHERE STUDENTID=ANY(SELECT STUDENTID FROM REGISTRATION WHERE REGSTATUS='R');
+
+FIRST||''||LAST
+-------------------------------
+JOSE DIAZ
+RAJESH PATEL
+DEBORAH RICKLES
+BRIAN LEE
+AMIR KHAN
+
+SQL> SELECT NAME FROM FACULTY WHERE ROOMID=ANY(SELECT ROOMID FROM LOCATION WHERE BUILDING IN('GANDHI', 'NEHRU'));
+
+NAME
+---------------
+JONES
+WILLIAMS
+MOBLEY
+VAJPAYEE
+SEN
+RIVERA
+CHANG
+COLLINS
+
+8 rows selected.
+
+SQL>
+
+

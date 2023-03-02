@@ -1,0 +1,177 @@
+SQL> CREATE TABLE EMPLOYEE_LAB (EMPLOYEEID NUMBER(3),LNAME VARCHAR2(15),FNAME VARCHAR2(15),POSITIONID NUMBER(1),SUPERVISOR NUMBER(3), HIREDATE DATE,SALARY NUMBER(6),COMM NUMBER(5),DEPTID NUMBER(2),QUALID NUMBER(1));
+
+Table created.
+
+SQL> CREATE TABLE DEPT_LAB (DEPTID NUMBER(2),DEPTNAME VARCHAR2(12),LOCATION VARCHAR2(15),EMPLOYEEID NUMBER(3));
+
+Table created.
+
+SQL> CREATE TABLE EMPLEVEL (LEVELNO NUMBER(1),LOWSAL NUMBER(6),HIGHSAL NUMBER(6));
+
+Table created.
+
+SQL> CREATE TABLE POSITION_LAB (POSITIONID NUMBER(1),POSDESC VARCHAR2(10));
+
+Table created.
+
+SQL> CREATE TABLE DEPENDENT_LAB (EMPLOYEEID NUMBER(3),DEPENTDENTID NUMBER(1), DEPDOB DATE,RELATION VARCHAR2(8));
+
+Table created.
+
+SQL> CREATE TABLE QUALIFICATION_LAB (QUALID NUMBER(1), QUALDESC VARCHAR2(11));
+
+Table created.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ALTER LNAME VARCHAR2[(15)] NOT NULL;
+ALTER TABLE EMPLOYEE_LAB ALTER LNAME VARCHAR2[(15)] NOT NULL
+                         *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> ALTER TABLE EMPLOYEE_LAB MODIFY LNAME VARCHAR2 NOT NULL;
+ALTER TABLE EMPLOYEE_LAB MODIFY LNAME VARCHAR2 NOT NULL
+                                               *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> ALTER TABLE EMPLOYEE_LAB MODIFY LNAME VARCHAR2(15) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB MODIFY FNAME VARCHAR2(15) NOT NULL;
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPID_LAB PRIMARY KEY (EMPLOYEEID);
+
+Table altered.
+
+SQL> ALTER TABLE DEPT_LAB ADD CONSTRAINT DEPTID_LAB PRIMARY KEY (DEPTID);
+
+Table altered.
+
+SQL> ALTER TABLE EMPLEVEL ADD CONSTRAINT LEVELID_LAB PRIMARY KEY (LEVELNO);
+
+Table altered.
+
+SQL> ALTER TABLE POSITION_LAB ADD CONSTRAINT POSITIONID_LAB PRIMARY KEY (POSTIONID);
+ALTER TABLE POSITION_LAB ADD CONSTRAINT POSITIONID_LAB PRIMARY KEY (POSTIONID)
+                                                                    *
+ERROR at line 1:
+ORA-00904: "POSTIONID": invalid identifier
+
+
+SQL> ALTER TABLE POSITION_LAB ADD CONSTRAINT POSITIONID_LAB PRIMARY KEY (POSITIONID);
+
+Table altered.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ALTER TABLE DEPENDENT_LAB ADD CONSTRAINT EMPDEPENID_LAB PRIMARY KEY (EMPLOYEEID, DEPENDENTID);
+ALTER TABLE DEPENDENT_LAB ADD CONSTRAINT EMPDEPENID_LAB PRIMARY KEY (EMPLOYEEID, DEPENDENTID)
+                                                                                 *
+ERROR at line 1:
+ORA-00904: "DEPENDENTID": invalid identifier
+
+
+SQL> ALTER TABLE DEPENDENT_LAB ADD CONSTRAINT EMPDEPENID_LAB PRIMARY KEY (EMPLOYEEID, DEPENTDENTID);
+
+Table altered.
+
+SQL> ALTER TABLE QAULIFICATION_LAB ADD CONSTRAINT QUALID_LAB PRIMARY KEY (QUALID);
+ALTER TABLE QAULIFICATION_LAB ADD CONSTRAINT QUALID_LAB PRIMARY KEY (QUALID)
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ALTER TABLE QUALIFICATION_LAB ADD CONSTRAINT QUALID_LAB PRIMARY KEY (QUALID);
+
+Table altered.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DESC EMPLOYEE_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER(3)
+ LNAME                                     NOT NULL VARCHAR2(15)
+ FNAME                                     NOT NULL VARCHAR2(15)
+ POSITIONID                                         NUMBER(1)
+ SUPERVISOR                                         NUMBER(3)
+ HIREDATE                                           DATE
+ SALARY                                             NUMBER(6)
+ COMM                                               NUMBER(5)
+ DEPTID                                             NUMBER(2)
+ QUALID                                             NUMBER(1)
+
+SQL> DESC DEPT_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTID                                    NOT NULL NUMBER(2)
+ DEPTNAME                                           VARCHAR2(12)
+ LOCATION                                           VARCHAR2(15)
+ EMPLOYEEID                                         NUMBER(3)
+
+SQL> DESC POSITION_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ POSITIONID                                NOT NULL NUMBER(1)
+ POSDESC                                            VARCHAR2(10)
+
+SQL> DESC DEPENDENT_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEEID                                NOT NULL NUMBER(3)
+ DEPENTDENTID                              NOT NULL NUMBER(1)
+ DEPDOB                                             DATE
+ RELATION                                           VARCHAR2(8)
+
+SQL> DESC QUALIFICATION_LAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ QUALID                                    NOT NULL NUMBER(1)
+ QUALDESC                                           VARCHAR2(11)
+
+SQL> DESC EMPLEVEL;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ LEVELNO                                   NOT NULL NUMBER(1)
+ LOWSAL                                             NUMBER(6)
+ HIGHSAL                                            NUMBER(6)
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT POSITIONID_LAB FOREIGN KEY (POSITIONID) REFERENCES POSITION_LAB(POSITIONID);
+ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT POSITIONID_LAB FOREIGN KEY (POSITIONID) REFERENCES POSITION_LAB(POSITIONID)
+                                        *
+ERROR at line 1:
+ORA-02264: name already used by an existing constraint
+
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT POSTID_LAB FOREIGN KEY (POSITIONID) REFERENCES POSITION_LAB(POSITIONID);
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPDEPTID_LAB FOREIGN KEY (DEPTID) REFERENCES DEPARTMENT_LAB(DEPTID);
+ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPDEPTID_LAB FOREIGN KEY (DEPTID) REFERENCES DEPARTMENT_LAB(DEPTID)
+                                                                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPDEPTID_LAB FOREIGN KEY (DEPTID) REFERENCES DEPT_LAB(DEPTID);
+
+Table altered.
+
+SQL> ALTER TABLE EMPLOYEE_LAB ADD CONSTRAINT EMPQUALID_LAB FOREIGN KEY (QUALID) REFERENCES QUALIFICATION_LAB(QUALID);
+
+Table altered.
+
+SQL> COMMIT;
+
+Commit complete.
